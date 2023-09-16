@@ -1,10 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { App } from 'components/App';
-import './index.css';
+import { GlobalStyle } from 'GlobalStyle';
+// import { Provider } from 'react-redux';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    {/* <Provider> */}
     <App />
+    <GlobalStyle />
+    {/* </Provider> */}
   </React.StrictMode>
 );
+
+// store = { store };
