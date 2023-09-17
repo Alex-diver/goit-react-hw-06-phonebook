@@ -41,9 +41,7 @@ export const ContactForm = () => {
     });
 
     contactExists
-      ? toast.info(
-          `Contact with name ${name} and number ${number} already exists`
-        )
+      ? toast.info(`${name} is already in contacts.`)
       : dispatch(addContact(contact));
   };
   const resetForm = () => {
