@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { getContacts, getFilter } from 'redux/selectors';
+import { deleteContact } from 'redux/contactsSlice';
 import {
   ItemStyled,
   NameStyled,
@@ -6,26 +9,27 @@ import {
   ListStyled,
 } from './ContactsList.styled';
 
-export const ContactList = ({ contacts, onHandleDelete }) => {
-  return (
-    <ListStyled>
-      {contacts.map(({ name, number, id }) => (
-        <Contact
-          key={id}
-          name={name}
-          number={number}
-          onHandleDelete={() => onHandleDelete(id)}
-        />
-      ))}
-    </ListStyled>
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
+
+  const filteredContacts = contacts?.filter(contact =>
+    contact?.name?.toLowerCase().includes(filter.toLowerCase())
   );
-};
-export const Contact = ({ name, number, onHandleDelete }) => {
   return (
-    <ItemStyled>
-      <NameStyled>{name} :</NameStyled>
-      <NumberStyled>{number}</NumberStyled>
-      <DeleteButton onClick={onHandleDelete}>Delete</DeleteButton>
-    </ItemStyled>
+    <div>
+      <ListStyled>
+        {filteredContacts.map(({ id, name, number }) => (
+          <ItemStyled key={id}>
+            <NameStyled>{name} :</NameStyled>
+            <NumberStyled>{number}</NumberStyled>
+            <DeleteButton onClick={() => dispatch(deleteContact(id))}>
+              Delete
+            </DeleteButton>
+          </ItemStyled>
+        ))}
+      </ListStyled>
+    </div>
   );
 };

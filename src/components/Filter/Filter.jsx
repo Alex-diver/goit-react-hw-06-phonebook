@@ -1,3 +1,6 @@
+import { useDispatch, useSelector } from 'react-redux';
+import { getFilter } from 'redux/selectors';
+import { setFilter } from 'redux/filtersSlice';
 import {
   FormStyled,
   LabelStyled,
@@ -5,18 +8,18 @@ import {
   InputStyled,
 } from './Filter.styled';
 
-export const Filter = ({ filter, onHandleSearch }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+  const filter = useSelector(getFilter);
+
   return (
     <FormStyled>
-      <LabelStyled htmlFor="">
+      <LabelStyled>
         <SpanStyled>Find contacts by name</SpanStyled>
         <InputStyled
           type="text"
-          name="name"
           value={filter}
-          autoComplete="off"
-          placeholder=""
-          onChange={onHandleSearch}
+          onChange={event => dispatch(setFilter(event.target.value.trim()))}
         />
       </LabelStyled>
     </FormStyled>
